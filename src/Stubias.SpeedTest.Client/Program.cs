@@ -20,11 +20,12 @@ namespace Stubias.SpeedTest.Client
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
                     var homeDir = Environment.GetFolderPath(SpecialFolder.UserProfile);
+                    var configFilePath =
+                        $"{homeDir}{Path.DirectorySeparatorChar}.speedtest{Path.DirectorySeparatorChar}config.json";
                     config.AddJsonFile("appsettings.json");
                     config.AddUserSecrets<Program>(true);
                     config.AddEnvironmentVariables();
-                    config.AddJsonFile($"{homeDir}{Path.PathSeparator}.speedtest{Path.PathSeparator}config.json",
-                        optional: true);
+                    config.AddJsonFile(configFilePath, optional: true);
 
                     if(args != null)
                     {
