@@ -1,6 +1,4 @@
 language: csharp
-services:
-- docker
 mono: none
 dist: xenial
 dotnet: 2.2
@@ -10,8 +8,7 @@ script:
 
 deploy:
   provider: releases
-  api_key:
-    secure: blbZmMaTnBpzkj+mp/5PkykbCS0ZyKLWgobsWxL2J53EOiv5cbsjsourY7sSzcIopUiwDjLxO0HsnGUcc5T3Lu5LgdtebwiskJoZz1D1dz0hRNKejacYGHoxvtkkMCM9TOnW4JYaaS0qmdkatgsp6tXxcZPuPuHSBQb5ytBeL+/MfIL3J7St7jSA6MHs4zWsAMzdtNRQCxT47E8OmsngaDCjtoGvGzf/vi/kADyjw83elY+D4IZdby/misFpXc7WSWjEwqq65J1VQoWc6Sqi8gQ2v32neCtf/BlktES73yPzUJr0xCi1WQWkFZ+y9CeuGMkr7MrTwwT2ob8c5AwVc4xwIpTGKAQ5ditplx101OXJj13fNHQ1/O/VLmP1BrSwMudMPGw4cU8ZikB7IddZJbeNiW1NBl08pzxaiAb812bMq65Q1RZgEHFqYZP3uRQHTIvjUvlv5lEpE6RByVOAWZYyLNoSjCCL/j2/JWG25HQNzNIi+Ut3/H8NNq+Nk8+2dSedpRMIRZaazHM51wi8cL4BAf0p0SqDKeJbsk3T0bOhX8D5AF/wxdokL9GYozHwgp+kNWjeAdq4CUsfm0+mnHopihB3ljUIIz9dgkIxrRh2TqqQJbw6BCVQi4t/TqOtEU9ievhdScDUnm3wr6OMcZpjT4LdG0LHkibd3fW/is8=
+  api_key: $GITHUB_API_KEY
   file: speedtest.tar.bz2
   skip_cleanup: true
   on:
