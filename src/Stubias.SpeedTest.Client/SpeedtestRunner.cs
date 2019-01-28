@@ -49,10 +49,10 @@ namespace Stubias.SpeedTest.Client
                     server.Latency = _speedTestClient.TestServerLatency(server);
                     _logger.LogDebug($"Latency test complete");
                     _logger.LogDebug("Testing doownload speed...");
-                    var downloadSpeed = _speedTestClient.TestDownloadSpeed(server);
+                    var downloadSpeed = _speedTestClient.TestDownloadSpeed(server, _runnerOptions.ConcurrentDownloads);
                     _logger.LogDebug("Download test completed");
                     _logger.LogDebug("Testing upload speed...");
-                    var uploadSpeed = _speedTestClient.TestUploadSpeed(server);
+                    var uploadSpeed = _speedTestClient.TestUploadSpeed(server, _runnerOptions.ConcurrentUploads);
                     _logger.LogDebug("Upload test completed");
                     result = new SpeedTestResult
                     {
@@ -70,7 +70,15 @@ namespace Stubias.SpeedTest.Client
                 }
                 catch(HttpRequestException hre)
                 {
-                    _logger.LogError(hre, $"Error testing server {server.Host}. Skipping...");
+                    var message = $"Error testing server {server.Host}. Skipping...";
+                    if(_runnerOptions.LogExceptions)
+                    {
+                        _logger.LogError(hre, message);
+                    }
+                    else
+                    {
+                        _logger.LogError(message);
+                    }
                 }
             } 
 
