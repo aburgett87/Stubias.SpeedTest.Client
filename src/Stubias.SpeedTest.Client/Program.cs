@@ -42,7 +42,7 @@ namespace Stubias.SpeedTest.Client
                     services.AddHttpClient<IAccessTokenHttpClient, AccessTokenHttpClient>();
                     services.AddTransient<ISpeedTestClient, SpeedTestClient>();
                     services.AddHostedService<SpeedTestHostedService>();
-                    services.AddSingleton<ISpeedtestRunner, SpeedtestRunner>();
+                    services.AddSingleton<ISpeedTestRunner, SpeedTestRunner>();
                 })
                 .ConfigureLogging((hostContext, logging) =>
                 {

@@ -10,12 +10,12 @@ namespace Stubias.SpeedTest.Client
 {
     public class SpeedTestHostedService : IHostedService, IDisposable
     {
-        private readonly ISpeedtestRunner _speedtestRunner;
+        private readonly ISpeedTestRunner _speedtestRunner;
         private readonly Runner _runnerOptions;
         private readonly ILogger<SpeedTestHostedService> _logger;
         private Timer _timer;
 
-        public SpeedTestHostedService(ISpeedtestRunner speedtestRunner,
+        public SpeedTestHostedService(ISpeedTestRunner speedtestRunner,
             IOptions<Runner> runnerOptions,
             ILogger<SpeedTestHostedService> logger)
         {

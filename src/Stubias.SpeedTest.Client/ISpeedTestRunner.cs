@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Stubias.SpeedTest.Client
 {
-    public interface ISpeedtestRunner
+    public interface ISpeedTestRunner
     {
         Task RunAsync();
     }

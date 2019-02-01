@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,16 +11,17 @@ using Stubias.SpeedTest.Client.Models.Configuration;
 
 namespace Stubias.SpeedTest.Client
 {
-    public class SpeedtestRunner : ISpeedtestRunner
+    public class SpeedTestRunner : ISpeedTestRunner
     {
         private readonly ISpeedTestClient _speedTestClient;
-        private readonly ILogger<SpeedtestRunner> _logger;
+        private readonly ILogger<SpeedTestRunner> _logger;
         private readonly ISpeedtestHttpClient _speedtestHttpClient;
         private readonly Runner _runnerOptions;
-        public SpeedtestRunner(ISpeedtestHttpClient speedtestHttpClient,
+
+        public SpeedTestRunner(ISpeedtestHttpClient speedtestHttpClient,
             ISpeedTestClient speedTestClient,
             IOptions<Runner> runnerOptions,
-            ILogger<SpeedtestRunner> logger)
+            ILogger<SpeedTestRunner> logger)
         {
             _runnerOptions = runnerOptions.Value;
             _speedtestHttpClient = speedtestHttpClient;
