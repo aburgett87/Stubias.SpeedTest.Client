@@ -3,7 +3,11 @@ mono: none
 dist: xenial
 dotnet: 2.2
 script:
-- dotnet publish -o $PWD/speedtest $PWD/src/Stubias.SpeedTest.Client/Stubias.SpeedTest.Client.csproj
+- >
+  dotnet publish
+    --output $PWD/speedtest
+    --configuration release
+    $PWD/src/Stubias.SpeedTest.Client/Stubias.SpeedTest.Client.csproj
 - tar -cjvf speedtest.tar.bz2 speedtest
 
 deploy:
