@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -10,16 +11,16 @@ namespace Stubias.SpeedTest.Client
 {
     public class SpeedTestHostedService : IHostedService, IDisposable
     {
-        private readonly ISpeedTestRunner _speedtestRunner;
         private readonly Runner _runnerOptions;
         private readonly ILogger<SpeedTestHostedService> _logger;
         private Timer _timer;
+        private readonly IServiceProvider _services;
 
-        public SpeedTestHostedService(ISpeedTestRunner speedtestRunner,
+        public SpeedTestHostedService(IServiceProvider services,
             IOptions<Runner> runnerOptions,
             ILogger<SpeedTestHostedService> logger)
         {
-            _speedtestRunner = speedtestRunner;
+            _services = services;
             _runnerOptions = runnerOptions.Value;
             _logger = logger;
         }
@@ -33,15 +34,19 @@ namespace Stubias.SpeedTest.Client
                 null,
                 TimeSpan.Zero,
                 TimeSpan.FromSeconds(_runnerOptions.Interval));
-            
+
             return Task.CompletedTask;
         }
 
         private async Task RunTest(object state)
         {
-            _logger.LogInformation("Running a speed test");
-            await _speedtestRunner.RunAsync();
-            _logger.LogInformation("Completed a speed test");
+            using(var scope = _services.CreateScope())
+            {
+                var serviceRunner = scope.ServiceProvider.GetRequiredService<ISpeedTestRunner>();
+                _logger.LogInformation("Running a speed test");
+                await serviceRunner.RunAsync();
+                _logger.LogInformation("Completed a speed test");
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
