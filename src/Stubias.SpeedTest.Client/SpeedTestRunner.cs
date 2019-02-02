@@ -8,30 +8,37 @@ namespace Stubias.SpeedTest.Client
 {
     public class SpeedTestRunner : ISpeedTestRunner
     {
-        private readonly ISpeedTestNetClient _speedTestNetRunner;
+        private readonly ISpeedTestNetClient _speedTestNetClient;
         private readonly Runner _runnerOptions;
+        private readonly ISpeedTestNodeClient _speedTestNodeClient;
+
         public SpeedTestRunner(IOptions<Runner> runnerOptions,
-            ISpeedTestNetClient speedTestNetRunner)
+            ISpeedTestNetClient speedTestNetRunner,
+            ISpeedTestNodeClient speedTestNodeClient)
         {
+            _speedTestNodeClient = speedTestNodeClient;
             _runnerOptions = runnerOptions.Value;
-            _speedTestNetRunner = speedTestNetRunner;
+            _speedTestNetClient = speedTestNetRunner;
         }
 
-        public async Task RunAsync()
+    public async Task RunAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_runnerOptions.Client))
         {
-            if(string.IsNullOrWhiteSpace(_runnerOptions.Client))
-            {
-                throw new ArgumentNullException("A client must be specified");
-            }
+            throw new ArgumentNullException("A client must be specified");
+        }
 
-            switch(_runnerOptions.Client)
-            {
-                case SpeedTestClientNames.SpeedTestNet:
-                    await _speedTestNetRunner.RunAsync();
-                    break;
-                default:
-                    throw new InvalidOperationException($"client {_runnerOptions.Client} is invalid");
-            }
+        switch (_runnerOptions.Client)
+        {
+            case SpeedTestClientNames.SpeedTestNet:
+                await _speedTestNetClient.RunAsync();
+                break;
+            case SpeedTestClientNames.SpeedTestNode:
+                await _speedTestNodeClient.RunAsync();
+                break;
+            default:
+                throw new InvalidOperationException($"client {_runnerOptions.Client} is invalid");
         }
     }
+}
 }

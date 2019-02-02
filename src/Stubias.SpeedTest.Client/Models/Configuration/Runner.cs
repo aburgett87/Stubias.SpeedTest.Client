@@ -10,6 +10,6 @@ namespace Stubias.SpeedTest.Client.Models.Configuration
         public string NodeName { get; set; } = Environment.MachineName;
         public SpeedTestNetClientConfiguration SpeedTestNetClient { get; set; }
         public bool LogExceptions { get; set; }
-        public string Client { get; set; } = SpeedTestClientNames.SpeedTestNet;
+        public string Client { get; set; } = SpeedTestClientNames.SpeedTestNode;
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "stubias.speedtest.client",
+  "version": "0.1.0",
+  "description": "node wrapper for speedtest-net",
+  "main": "Node/speedtest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander Burgett",
+  "repository": "https://github.com/aburgett87/Stubias.SpeedTest.Client",
+  "license": "ISC",
+  "dependencies": {
+    "speedtest-net": "^1.4.4"
+  }
+}

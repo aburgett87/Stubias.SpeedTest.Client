@@ -32,8 +32,14 @@ namespace Stubias.SpeedTest.Client
                         config.AddCommandLine(args);
                     }
                 })
+                .ConfigureLogging((hostContext, logging) =>
+                {
+                    logging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddLogging();
                     services.AddOptions();
                     services.Configure<Auth>(hostContext.Configuration.GetSection("Auth"));
                     services.Configure<Runner>(hostContext.Configuration.GetSection("Runner"));
@@ -44,11 +50,8 @@ namespace Stubias.SpeedTest.Client
                     services.AddHostedService<SpeedTestHostedService>();
                     services.AddTransient<ISpeedTestRunner, SpeedTestRunner>();
                     services.AddTransient<ISpeedTestNetClient, SpeedTestNetClient>();
-                })
-                .ConfigureLogging((hostContext, logging) =>
-                {
-                    logging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
-                    logging.AddConsole();
+                    services.AddTransient<ISpeedTestNodeClient, SpeedTestNodeClient>();
+                    services.AddNodeServices();
                 });
 
                 await builder.RunConsoleAsync();

@@ -31,7 +31,6 @@ namespace Stubias.SpeedTest.Client
 
         public async Task RunAsync()
         {
-            _logger.LogInformation("Running speed test...");
             var executionDateTime = DateTime.UtcNow;
             _logger.LogDebug("Getting speed test client settings...");
             var settings = _speedTestClient.GetSettings();
@@ -93,7 +92,6 @@ namespace Stubias.SpeedTest.Client
                 _logger.LogDebug("Posting speed test results...");
                 await _speedtestHttpClient.PostTestResult(result);
                 _logger.LogDebug("Speed test results posted");
-                _logger.LogInformation("Speed test completed");
             }
             else
             {
